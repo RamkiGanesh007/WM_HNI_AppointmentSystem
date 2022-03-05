@@ -1,7 +1,9 @@
 package com.appointmentsystem;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.wm_hni_appointmentsystem.AppointmentSystem;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,18 +21,23 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.appointmentsystem.databinding.ActivityBookAppointmentBinding;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class BookAppointment extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityBookAppointmentBinding binding;
 
     Button backbutton;
+    Button book;
 
     TextView role;
     TextView description;
 
     EditText Edate;
     EditText time;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +55,30 @@ public class BookAppointment extends AppCompatActivity {
 
         String time=Edate.getText().toString();
 
+        backbutton=findViewById(R.id.button);
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
+        book=findViewById(R.id.book);
 
+        book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                String appointment_id1=Integer.toString((int) Math.random());
+                String appointment_id2=Integer.toString((int)Math.random());
+                Date currentTime = Calendar.getInstance().getTime();
+
+                AppointmentSystem asystem=new AppointmentSystem(appointment_id1,currentTime.toString(),"Requested",appointment_id1,appointment_id2);
+
+                //Make Use of this object to store it in Appointment Table
+                Toast.makeText(BookAppointment.this, "Appointment Booked !!!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
